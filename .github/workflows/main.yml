@@ -1,10 +1,7 @@
 name: AML Mod Compiler
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,11 +13,7 @@ jobs:
       with:
         submodules: recursive
         
-    - name: Setup SSH keys...
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: |
-          ${{ secrets.SSH }}
+    
 
     - name: Download AndroidModLoader`s mod template...
       uses: wei/wget@v1
@@ -37,10 +30,7 @@ jobs:
       with:
         args: -O ./isautils.h https://github.com/AndroidModLoader/SAUtils/raw/main/isautils.h
           
-    - name: Get GTA:SA structures file (private)...
-      run: |
-        git clone ssh://git@github.com/RusJJ/GTASAAndroid_Structs.git ./structs
-        mv ./structs/* ./
+    
 
     - name: Install Android NDK (r25c)...
       uses: nttld/setup-ndk@v1.2.0
